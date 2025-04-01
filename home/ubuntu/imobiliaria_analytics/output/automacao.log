@@ -1,0 +1,29 @@
+2025-04-01 19:48:12,168 - main - INFO - Módulos importados com sucesso
+2025-04-01 19:48:12,170 - main - INFO - Iniciando processo de automação de análise de dados imobiliários
+2025-04-01 19:48:12,170 - main - INFO - Iniciando processamento de dados
+2025-04-01 19:48:12,170 - data_processor - INFO - Processador de dados inicializado. Diretório de dados: C:\Users\SABBAG\Desktop\AutoLytics\home\ubuntu\imobiliaria_analytics\data
+2025-04-01 19:48:12,476 - data_processor - INFO - Dados de produção carregados: 348 registros
+2025-04-01 19:48:12,512 - data_processor - INFO - Dados de ganhos carregados: 148 registros
+2025-04-01 19:48:12,628 - data_processor - INFO - Dados de leads carregados: 23 registros
+2025-04-01 19:48:12,638 - data_processor - INFO - Dados de produção limpos: 345 registros após limpeza
+2025-04-01 19:48:12,640 - data_processor - INFO - Dados de ganhos limpos: 148 registros após limpeza
+2025-04-01 19:48:12,651 - data_processor - INFO - Dados de leads limpos: 23 registros após limpeza
+2025-04-01 19:48:12,652 - data_processor - INFO - Métricas de produção calculadas: 1 métricas
+2025-04-01 19:48:12,652 - data_processor - INFO - Métricas de ganhos calculadas: 0 métricas
+2025-04-01 19:48:12,652 - data_processor - INFO - Métricas de leads calculadas: 1 métricas
+2025-04-01 19:48:12,652 - data_processor - INFO - Processamento de todos os dados concluído com sucesso
+2025-04-01 19:48:12,653 - main - INFO - Processamento de dados concluído. Resultados salvos em: C:\Users\SABBAG\Desktop\AutoLytics\home\ubuntu\imobiliaria_analytics\output\metricas_processadas.json
+2025-04-01 19:48:12,653 - main - INFO - Iniciando análise de dados
+2025-04-01 19:48:12,653 - data_analyzer - INFO - Analisador de dados inicializado
+2025-04-01 19:48:12,654 - data_analyzer - INFO - Iniciando análise completa dos dados
+2025-04-01 19:48:12,654 - data_analyzer - WARNING - Colunas necessárias não encontradas para análise de tendências
+2025-04-01 19:48:12,654 - data_analyzer - WARNING - Colunas necessárias não encontradas para análise de corretores
+2025-04-01 19:48:12,654 - data_analyzer - WARNING - Coluna de conversão não encontrada para análise de leads
+2025-04-01 19:48:12,655 - data_analyzer - INFO - Resultados da análise salvos em: C:\Users\SABBAG\Desktop\AutoLytics\home\ubuntu\imobiliaria_analytics\output\resultados_analise.json
+2025-04-01 19:48:12,655 - main - INFO - Análise de dados concluída com sucesso
+2025-04-01 19:48:12,655 - main - INFO - Iniciando geração de relatório
+2025-04-01 19:48:12,662 - report_generator - INFO - Estilos personalizados configurados
+2025-04-01 19:48:12,662 - report_generator - INFO - Gerador de relatório inicializado. Diretório de saída: C:\Users\SABBAG\Desktop\AutoLytics\home\ubuntu\imobiliaria_analytics\output
+2025-04-01 19:48:12,665 - report_generator - INFO - Relatório PDF gerado com sucesso: C:\Users\SABBAG\Desktop\AutoLytics\home\ubuntu\imobiliaria_analytics\output\relatorio_estrategico_20250401.pdf
+2025-04-01 19:48:12,666 - main - INFO - Relatório gerado com sucesso: C:\Users\SABBAG\Desktop\AutoLytics\home\ubuntu\imobiliaria_analytics\output\relatorio_estrategico_20250401.pdf
+2025-04-01 19:48:12,666 - main - INFO - Processo de automação concluído em 0.50 segundos

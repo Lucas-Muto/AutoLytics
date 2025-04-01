@@ -81,12 +81,16 @@ def main():
     
     # Verificar se existem arquivos de dados
     arquivos = os.listdir(data_dir)
-    arquivo_producao = next((f for f in arquivos if 'producao' in f.lower() or 'vendas' in f.lower()), None)
-    arquivo_ganhos = next((f for f in arquivos if 'ganhos' in f.lower() or 'comissoes' in f.lower()), None)
-    arquivo_leads = next((f for f in arquivos if 'leads' in f.lower() or 'conversao' in f.lower()), None)
+    arquivo_producao = 'vendas.xlsx'  # Nome correto do arquivo de vendas
+    arquivo_ganhos = 'comissoes.xlsx'  # Nome correto do arquivo de comissões
+    arquivo_leads = 'leads.xlsx'  # Nome correto do arquivo de leads
     
-    if not all([arquivo_producao, arquivo_ganhos, arquivo_leads]):
-        logger.error("Arquivos de dados necessários não encontrados. Use a opção --gerar-dados para criar dados de exemplo.")
+    if not all([
+        os.path.exists(os.path.join(data_dir, arquivo_producao)),
+        os.path.exists(os.path.join(data_dir, arquivo_ganhos)),
+        os.path.exists(os.path.join(data_dir, arquivo_leads))
+    ]):
+        logger.error("Arquivos de dados necessários não encontrados.")
         sys.exit(1)
     
     # Etapa 2: Processamento de dados
