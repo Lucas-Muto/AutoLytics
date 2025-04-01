@@ -411,5 +411,80 @@ class ReportGenerator:
         insights = [i for i in self.resultados.get('insights', []) if i.get('categoria') == 'desempenho_corretores']
         if insights:
             for insight in insights:
-                texto = Paragraph(insight.get('descricao', '')
-(Content truncated due to size limit. Use line ranges to read in chunks)
+                texto = Paragraph(insight.get('descricao', ''), self.styles['Insight'])
+                elementos.append(texto)
+        
+        elementos.append(PageBreak())
+        
+        return elementos
+
+    def gerar_relatorio(self, nome_arquivo):
+        """
+        Gera o relatório PDF completo.
+        
+        Args:
+            nome_arquivo (str): Nome do arquivo PDF a ser gerado
+            
+        Returns:
+            str: Caminho do arquivo PDF gerado ou None em caso de erro
+        """
+        try:
+            # Criar caminho completo do arquivo
+            caminho_pdf = os.path.join(self.output_dir, nome_arquivo)
+            
+            # Criar documento
+            doc = SimpleDocTemplate(
+                caminho_pdf,
+                pagesize=A4,
+                rightMargin=72,
+                leftMargin=72,
+                topMargin=72,
+                bottomMargin=72
+            )
+            
+            # Lista de elementos do relatório
+            elementos = []
+            
+            # Adicionar seções
+            elementos.extend(self._criar_cabecalho())
+            elementos.extend(self._criar_resumo_executivo())
+            
+            # Gerar PDF
+            doc.build(elementos)
+            
+            logger.info(f"Relatório PDF gerado com sucesso: {caminho_pdf}")
+            return caminho_pdf
+        except Exception as e:
+            logger.error(f"Erro ao gerar relatório PDF: {str(e)}")
+            return None
+
+
+# Função para uso direto do script
+def main():
+    """
+    Função principal para execução direta do script.
+    """
+    # Diretório base do projeto
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    output_dir = os.path.join(base_dir, 'output')
+    
+    # Carregar resultados da análise
+    with open(os.path.join(output_dir, 'resultados_analise.json'), 'r', encoding='utf-8') as f:
+        resultados = json.load(f)
+    
+    # Criar gerador de relatório
+    generator = ReportGenerator(resultados, output_dir)
+    
+    # Gerar relatório
+    data_atual = datetime.now().strftime("%Y%m%d")
+    nome_arquivo = f"relatorio_estrategico_{data_atual}.pdf"
+    
+    caminho_relatorio = generator.gerar_relatorio(nome_arquivo)
+    
+    if caminho_relatorio:
+        print(f"Relatório gerado com sucesso: {caminho_relatorio}")
+    else:
+        print("Falha na geração do relatório.")
+
+if __name__ == "__main__":
+    main()

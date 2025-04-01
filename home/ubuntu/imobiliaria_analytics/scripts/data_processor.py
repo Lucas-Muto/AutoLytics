@@ -392,5 +392,22 @@ def main():
     """
     # Diretório base do projeto
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    data_
-(Content truncated due to size limit. Use line ranges to read in chunks)
+    data_dir = os.path.join(base_dir, 'data')
+    
+    # Criar processador de dados
+    processor = DataProcessor(data_dir)
+    
+    # Processar dados
+    resultado = processor.processar_todos_dados(
+        arquivo_producao='dados_producao.xlsx',
+        arquivo_ganhos='dados_ganhos.xlsx',
+        arquivo_leads='dados_leads.xlsx'
+    )
+    
+    if resultado:
+        print("Processamento de dados concluído com sucesso!")
+    else:
+        print("Falha no processamento de dados.")
+
+if __name__ == "__main__":
+    main()

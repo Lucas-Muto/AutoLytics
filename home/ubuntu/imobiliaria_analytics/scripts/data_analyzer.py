@@ -355,5 +355,101 @@ class DataAnalyzer:
                     })
                     
                     # Adicionar recomendação
-   
-(Content truncated due to size limit. Use line ranges to read in chunks)
+                    self.recomendacoes.append({
+                        'categoria': 'conversao_leads',
+                        'descricao': 'Revisar e otimizar estratégias para origens de leads com baixa conversão.',
+                        'prioridade': 'média'
+                    })
+            
+            # Criar gráfico de conversão
+            plt.figure(figsize=(10, 6))
+            sns.barplot(x='origem', y='taxa_conversao', data=conversao_por_origem)
+            plt.title('Taxa de Conversão por Origem de Lead')
+            plt.xlabel('Origem')
+            plt.ylabel('Taxa de Conversão')
+            plt.xticks(rotation=45)
+            plt.grid(True, alpha=0.3)
+            
+            # Salvar figura
+            output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'output')
+            figura_path = os.path.join(output_dir, 'conversao_leads.png')
+            plt.savefig(figura_path)
+            plt.close()
+            
+            self.figuras.append({
+                'titulo': 'Conversão de Leads',
+                'descricao': 'Análise da taxa de conversão por origem de leads',
+                'arquivo': figura_path
+            })
+            
+            logger.info("Análise de conversão de leads concluída")
+            return resultados
+        except Exception as e:
+            logger.error(f"Erro ao analisar conversão de leads: {str(e)}")
+            return {}
+
+    def executar_analise_completa(self):
+        """
+        Executa todas as análises disponíveis.
+        
+        Returns:
+            dict: Resultados consolidados de todas as análises
+        """
+        logger.info("Iniciando análise completa dos dados")
+        
+        # Executar todas as análises
+        resultados_tendencias = self.analisar_tendencias_vendas()
+        resultados_corretores = self.analisar_desempenho_corretores()
+        resultados_leads = self.analisar_conversao_leads()
+        
+        # Consolidar resultados
+        resultados = {
+            'tendencias_vendas': resultados_tendencias,
+            'desempenho_corretores': resultados_corretores,
+            'conversao_leads': resultados_leads,
+            'insights': self.insights,
+            'recomendacoes': self.recomendacoes,
+            'figuras': self.figuras
+        }
+        
+        # Salvar resultados em JSON
+        try:
+            output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'output')
+            caminho_json = os.path.join(output_dir, 'resultados_analise.json')
+            
+            with open(caminho_json, 'w', encoding='utf-8') as f:
+                json.dump(resultados, f, ensure_ascii=False, indent=4)
+            
+            logger.info(f"Resultados da análise salvos em: {caminho_json}")
+        except Exception as e:
+            logger.error(f"Erro ao salvar resultados em JSON: {str(e)}")
+        
+        return resultados
+
+
+# Função para uso direto do script
+def main():
+    """
+    Função principal para execução direta do script.
+    """
+    # Diretório base do projeto
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    data_dir = os.path.join(base_dir, 'data')
+    
+    # Carregar dados processados
+    with open(os.path.join(base_dir, 'output', 'metricas_processadas.json'), 'r', encoding='utf-8') as f:
+        metricas = json.load(f)
+    
+    # Criar analisador
+    analyzer = DataAnalyzer(metricas.get('dataframes', {}), metricas)
+    
+    # Executar análise
+    resultados = analyzer.executar_analise_completa()
+    
+    if resultados:
+        print("Análise de dados concluída com sucesso!")
+    else:
+        print("Falha na análise de dados.")
+
+if __name__ == "__main__":
+    main()
